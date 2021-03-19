@@ -1,12 +1,14 @@
 package main
 
 import (
-	"./db"
+	"db"
 	"fmt"
 )
 
 func main() {
-    fmt.Println("123")
+    fmt.Println(db.IsMigrated())
 
-    db.isMigrated()
+    if !db.IsMigrated() {
+    	db.MigrateDatabase()
+	}
 }

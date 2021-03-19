@@ -11,7 +11,7 @@ var dbFileName = "db/eddb.sqlite"
 var dbDialect = "sqlite3"
 var migrationsDir = "db"
 
-func openDb(fileName string) (*DB, error)  {
+func openDb(fileName string) (*sql.DB, error)  {
 	db, err := sql.Open("sqlite3", fileName)
 	if err != nil {
 		fmt.Print("Error on open DB file!")
@@ -20,7 +20,7 @@ func openDb(fileName string) (*DB, error)  {
 	return db, err
 }
 
-func migrateDatabase() {
+func MigrateDatabase() {
 
 	migrations := &migrate.FileMigrationSource{
 		Dir: migrationsDir,
@@ -30,12 +30,12 @@ func migrateDatabase() {
 
 	n, err := migrate.Exec(db, dbDialect, migrations, migrate.Up)
 	if err != nil {
-		fmt.Print("Error on exec migrations!")
+		fmt.Printf("Error on exec migrations: %s\n", err)
 	}
 	fmt.Printf("Applied %d migrations!\n", n)
 }
 
-func isMigrated() bool {
+func IsMigrated() bool {
 	src := &migrate.FileMigrationSource{
 		Dir: migrationsDir,
 	}
@@ -52,11 +52,21 @@ func isMigrated() bool {
 		return false
 	}
 
+	allFound := false
 	for _, m := range migrations {
+		found := false
 		for _, r := range records {
-			
+			//fmt.Println(m, r)
+			if r.Id == m.Id {
+				found = true
+				break
+			}
+		}
+		allFound = found
+		if !allFound {
+			break
 		}
 	}
 
-	return true
+	return allFound
 }

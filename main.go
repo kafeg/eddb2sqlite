@@ -1,7 +1,6 @@
 package main
 
 import (
-	"db"
 	"fmt"
 	"os"
 	"strings"
@@ -16,12 +15,12 @@ func main() {
 
 	switch os.Args[1] {
 	case "status": {
-		fmt.Printf("DB is migrated: %t, DB main data imported: %s, DB recent data updated: %s", db.IsMigrated(), "01.01.2020", "10.10.2021")
+		fmt.Printf("DB is migrated: %t, DB main data imported: %s, DB recent data updated: %s", IsMigrated(), "01.01.2020", "10.10.2021")
 	}
 	case "migrate": {
-		if !db.IsMigrated() {
+		if !IsMigrated() {
 			fmt.Println("Migrating DB...")
-			db.MigrateDatabase()
+			MigrateDatabase()
 			fmt.Println("Done!")
 		} else {
 			fmt.Println("DB alrteady migrated")

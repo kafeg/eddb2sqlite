@@ -1,4 +1,4 @@
-package db
+package main
 
 import (
 	"database/sql"
@@ -11,7 +11,7 @@ var dbFileName = "db/eddb.sqlite"
 var dbDialect = "sqlite3"
 var migrationsDir = "db"
 
-func openDb(fileName string) (*sql.DB, error)  {
+func OpenDb(fileName string) (*sql.DB, error)  {
 	db, err := sql.Open("sqlite3", fileName)
 	if err != nil {
 		fmt.Print("Error on open DB file!")
@@ -26,7 +26,7 @@ func MigrateDatabase() {
 		Dir: migrationsDir,
 	}
 
-	db, err := openDb(dbFileName)
+	db, err := OpenDb(dbFileName)
 
 	n, err := migrate.Exec(db, dbDialect, migrations, migrate.Up)
 	if err != nil {
@@ -45,7 +45,7 @@ func IsMigrated() bool {
 		return false
 	}
 
-	db, err := openDb(dbFileName)
+	db, err := OpenDb(dbFileName)
 
 	records, err := migrate.GetMigrationRecords(db, dbDialect)
 	if err != nil {

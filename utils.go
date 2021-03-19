@@ -84,3 +84,7 @@ func gunzipFile(gzFilePath, dstFilePath string) (int64, error) {
 
 	return written, nil
 }
+
+func csv2sqlite() {
+
+}

@@ -5,9 +5,13 @@ import (
 	"fmt"
 	"os"
 	"strings"
+	"time"
 )
 
 func main() {
+
+	currentTime := time.Now()
+	fmt.Println("Current Time in String: ", currentTime.String())
 
 	// migrate database
 	if !isMigrated() {
@@ -73,6 +77,9 @@ func main() {
 			os.Exit(1)
 		}
 	}
+
+	currentTime = time.Now()
+	fmt.Println("Current Time in String: ", currentTime.String())
 
     os.Exit(0)
 }

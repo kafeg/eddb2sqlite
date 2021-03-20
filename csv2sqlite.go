@@ -159,7 +159,7 @@ func insertBatchRows(referenceTables, colsArr []string, tgtTblName string, db *s
 			}
 		}
 	}
-	fmt.Printf("Insert %d rows...\n", len(batchValues))
+	//fmt.Printf("Insert %d rows...\n", len(batchValues))
 	stmt := fmt.Sprintf("INSERT INTO %s (%s) VALUES %s;", tgtTblName, strings.Join(colsToInsert[:], ","), strings.Join(batchValues[:], ","))
 	_, err := db.Exec(stmt)
 

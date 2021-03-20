@@ -104,7 +104,7 @@ func json2csv(inFile, outFile string) {
 				case "float64":
 					record = append(record, strconv.Itoa(int(value.(float64))))
 				case "map[string]interface {}":
-					fmt.Println(value, v2, reflect.TypeOf(value).String())
+					//fmt.Println(value, v2, reflect.TypeOf(value).String())
 					record = append(record, value.(map[string]interface{})["name"].(string))
 				default:
 					log.Fatalln("Unhandled field type",  reflect.TypeOf(value).String())

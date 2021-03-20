@@ -11,7 +11,7 @@ var dbFileName = "db/eddb.sqlite"
 var dbDialect = "sqlite3"
 var migrationsDir = "db"
 
-func OpenDb(fileName string) (*sql.DB, error)  {
+func openDb(fileName string) (*sql.DB, error)  {
 	db, err := sql.Open("sqlite3", fileName)
 	if err != nil {
 		fmt.Print("Error on open DB file!")
@@ -20,13 +20,14 @@ func OpenDb(fileName string) (*sql.DB, error)  {
 	return db, err
 }
 
-func MigrateDatabase() {
+func migrateDatabase() {
 
 	migrations := &migrate.FileMigrationSource{
 		Dir: migrationsDir,
 	}
 
-	db, err := OpenDb(dbFileName)
+	db, err := openDb(dbFileName)
+	defer db.Close()
 
 	n, err := migrate.Exec(db, dbDialect, migrations, migrate.Up)
 	if err != nil {
@@ -35,7 +36,7 @@ func MigrateDatabase() {
 	fmt.Printf("Applied %d migrations!\n", n)
 }
 
-func IsMigrated() bool {
+func isMigrated() bool {
 	src := &migrate.FileMigrationSource{
 		Dir: migrationsDir,
 	}
@@ -45,7 +46,8 @@ func IsMigrated() bool {
 		return false
 	}
 
-	db, err := OpenDb(dbFileName)
+	db, err := openDb(dbFileName)
+	defer db.Close()
 
 	records, err := migrate.GetMigrationRecords(db, dbDialect)
 	if err != nil {
@@ -69,4 +71,13 @@ func IsMigrated() bool {
 	}
 
 	return allFound
+}
+
+func isTableExists(tblName string) bool {
+	db, _ := openDb(dbFileName)
+	defer db.Close()
+
+	_, err := db.Query("SELECT 1 FROM " + tblName + ";")
+
+	return err == nil
 }

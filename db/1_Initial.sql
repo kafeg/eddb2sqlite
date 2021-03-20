@@ -72,7 +72,6 @@ CREATE TABLE `factions` (
   `updated_at` int(11) NOT NULL,
   `government_id` int(11) NOT NULL,
   `allegiance_id` int(11) NOT NULL,
-  `state_id` int(11) NOT NULL,
   `home_system_id` int(11) NOT NULL,
   `is_player_faction` tinyint(1) NOT NULL
 );
@@ -151,12 +150,12 @@ CREATE TABLE `security` (
   `security` mediumtext NOT NULL
 );
 
-DROP TABLE IF EXISTS `state`;
-CREATE TABLE `state` (
-  `id` INTEGER PRIMARY KEY AUTOINCREMENT,
-  `state_id` int(11) UNIQUE NOT NULL,
-  `state` mediumtext NOT NULL
-);
+--DROP TABLE IF EXISTS `state`;
+--CREATE TABLE `state` (
+--  `id` INTEGER PRIMARY KEY AUTOINCREMENT,
+--  `state_id` int(11) UNIQUE NOT NULL,
+--  `state` mediumtext NOT NULL
+--);
 
 DROP TABLE IF EXISTS `stations`;
 CREATE TABLE `stations` (
@@ -169,7 +168,6 @@ CREATE TABLE `stations` (
   `distance_to_star` int(11) NOT NULL,
   `government_id` int(11) NOT NULL,
   `allegiance_id` int(11) NOT NULL,
-  `state_id` int(11) NOT NULL,
   `type_id` int(11) NOT NULL,
   `has_blackmarket` tinytext NOT NULL,
   `has_market` tinytext NOT NULL,
@@ -204,15 +202,16 @@ CREATE TABLE `systems` (
   `is_populated` tinyint(1) NOT NULL,
   `government_id` int(11) NOT NULL,
   `allegiance_id` int(11) NOT NULL,
-  `state_id` int(11) NOT NULL,
   `security_id` int(11) NOT NULL,
   `primary_economy_id` int(11) NOT NULL,
   `power` mediumtext NOT NULL,
   `power_state_id` int(11) NOT NULL,
   `needs_permit` tinyint(1) NOT NULL,
   `updated_at` int(11) NOT NULL,
+  `simbad_ref` mediumtext NOT NULL,
   `controlling_minor_faction_id` int(11) NOT NULL,
-  `reserve_type_id` int(11) NOT NULL
+  `reserve_type_id` int(11) NOT NULL,
+  `ed_system_address` bigint(20) NOT NULL
 );
 
 DROP TABLE IF EXISTS `type`;

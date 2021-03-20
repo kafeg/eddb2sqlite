@@ -9,18 +9,18 @@ import (
 func main() {
 
 	if len(os.Args) < 2 {
-		fmt.Println("Wrong args count. Available commands: migrate, status, getdata, generate")
+		fmt.Println("Wrong args count. Available commands: migrate, status, getdata, import")
 		os.Exit(1)
 	}
 
 	switch os.Args[1] {
 	case "status": {
-		fmt.Printf("DB is migrated: %t, DB main data imported: %s, DB recent data updated: %s", IsMigrated(), "01.01.2020", "10.10.2021")
+		fmt.Printf("DB is migrated: %t, DB main data imported: %s, DB recent data updated: %s", isMigrated(), "01.01.2020", "10.10.2021")
 	}
 	case "migrate": {
-		if !IsMigrated() {
+		if !isMigrated() {
 			fmt.Println("Migrating DB...")
-			MigrateDatabase()
+			migrateDatabase()
 			fmt.Println("Done!")
 		} else {
 			fmt.Println("DB alrteady migrated")
@@ -56,6 +56,27 @@ func main() {
 				if err != nil {
 					fmt.Printf("Error: %s", err)
 				}
+			}
+		}
+	}
+	case "import": {
+		if !isMigrated() {
+			//fmt.Println("Database is not migrated, plese run 'migrate' command first")
+			//os.Exit(1)
+
+			fmt.Println("Migrating DB...")
+			migrateDatabase()
+			fmt.Println("Done!")
+		}
+
+		csvs := []string{"data/factions.csv", "data/systems_recently.csv"}
+
+		for _, s := range csvs {
+			err := csv2sqlite(s)
+
+			if err != nil {
+				fmt.Printf("Error: %s\n", err)
+				os.Exit(1)
 			}
 		}
 	}

@@ -8,6 +8,13 @@ CREATE TABLE `allegiance` (
   `allegiance` mediumtext NOT NULL
 );
 
+DROP TABLE IF EXISTS `category`;
+CREATE TABLE `category` (
+  `id` INTEGER PRIMARY KEY AUTOINCREMENT,
+  `category_id` INTEGER UNIQUE NOT NULL,
+  `category` mediumtext NOT NULL
+);
+
 DROP TABLE IF EXISTS `bodies`;
 CREATE TABLE `bodies` (
   `id` INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -178,6 +185,12 @@ CREATE TABLE `stations` (
   `has_shipyard` tinytext NOT NULL,
   `has_docking` tinytext NOT NULL,
   `has_commodities` tinytext NOT NULL,
+  `has_universal_cartographics` tinytext NOT NULL,
+  `has_technology_broker` tinytext NOT NULL,
+  `has_material_trader` tinytext NOT NULL,
+  `has_interstellar_factors` tinytext NOT NULL,
+  `has_carrier_vendor` tinytext NOT NULL,
+  `has_carrier_administration` tinytext NOT NULL,
   `shipyard_updated_at` int(11) NOT NULL,
   `outfitting_updated_at` int(11) NOT NULL,
   `market_updated_at` int(11) NOT NULL,
@@ -186,7 +199,8 @@ CREATE TABLE `stations` (
   `settlement_size` int(11) NOT NULL,
   `settlement_security_id` int(11) NOT NULL,
   `body_id` int(11) NOT NULL,
-  `controlling_minor_faction_id` int(11) NOT NULL
+  `controlling_minor_faction_id` int(11) NOT NULL,
+  `ed_market_id` int(11) NOT NULL
 ) ;
 
 DROP TABLE IF EXISTS `systems`;
@@ -238,4 +252,5 @@ DROP TABLE `factions`;
 DROP TABLE `controlling_minor_faction`;
 DROP TABLE `commodities`;
 DROP TABLE `bodies`;
+DROP TABLE `category`;
 DROP TABLE `allegiance`;

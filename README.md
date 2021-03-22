@@ -26,3 +26,4 @@ ORDER BY supply DESC
 ```
 
 Sample result:
+![Image of Yaktocat](https://github.com/kafeg/eddb2sqlite/blob/main/sampleres.png?raw=true)
